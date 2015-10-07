@@ -35,6 +35,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,13 +82,15 @@ public class RegisterFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(358, 358, 358)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField5)
-                    .addComponent(jTextField4)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField2)
-                    .addComponent(jTextField1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField5)
+                        .addComponent(jTextField4)
+                        .addComponent(jTextField3)
+                        .addComponent(jTextField2)
+                        .addComponent(jTextField1)))
                 .addContainerGap(363, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -103,7 +106,9 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(97, 97, 97))
         );
@@ -125,14 +130,21 @@ public class RegisterFrame extends javax.swing.JFrame {
         iban = jTextField5.getText();
         
         Users user = new Users();
+        user.setCharacterSlots(5);
+        
+        user.setBalance(0);
         user.setUserName(username);
         user.setFirstName(fName);
         user.setLastName(lName);
         user.setIban(iban);
         user.setPassword(password);
-        
-        persist(user);
+        user.setMonthsPaid(0);
+        try{
+            persist(user);
         this.dispose();
+        } catch(Exception e){
+            jLabel1.setText("The username you are trying to use is already in use.");
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -189,6 +201,7 @@ public class RegisterFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

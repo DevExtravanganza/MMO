@@ -45,5 +45,4 @@ public class INFDEVMMORPG20 {
             em.close();
         }
     }
-
 }

@@ -5,12 +5,9 @@
  */
 package infdev.mmorpg.pkg2.pkg0;
 
-import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-import javax.swing.JFrame;
 
 /**
  *
@@ -18,6 +15,7 @@ import javax.swing.JFrame;
  */
 public class StartScreen extends javax.swing.JPanel {
 
+    
     /**
      * Creates new form StartScreen
      */
@@ -42,6 +40,7 @@ public class StartScreen extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setText("Welcome to this MMORPG!");
 
@@ -80,16 +79,20 @@ public class StartScreen extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 6, Short.MAX_VALUE)
+            .addGap(0, 22, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -101,9 +104,6 @@ public class StartScreen extends javax.swing.JPanel {
                         .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
                 .addGap(332, 332, 332))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +119,9 @@ public class StartScreen extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -133,15 +135,18 @@ public class StartScreen extends javax.swing.JPanel {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
-        
-        Users result = (Users) em.createQuery("SELECT u FROM Users u WHERE u.userName ='"+toCheckUsername+"' AND u.password ='"+toCheckPassword+"'").getSingleResult();
-        
-        if(result.getUserName().equals(toCheckUsername)){
-            System.out.println("yay");
-        }
-        else{
-            System.out.println("you suck");
-        }
+        try{
+            Users result = (Users) em.createQuery("SELECT u FROM Users u WHERE u.userName ='"+toCheckUsername+"' AND u.password ='"+toCheckPassword+"'").getSingleResult();
+            
+            GameFrame gameFrame = new GameFrame(result);
+            
+            this.setVisible(false);
+            gameFrame.pack();
+            gameFrame.setVisible(true);
+        } catch(Exception e){
+            jLabel4.setText("Your username and/or password is incorrect.");
+            e.printStackTrace();
+        } 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -167,6 +172,7 @@ public class StartScreen extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
