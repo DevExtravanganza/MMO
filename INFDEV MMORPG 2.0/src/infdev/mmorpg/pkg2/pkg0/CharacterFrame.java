@@ -23,13 +23,14 @@ public class CharacterFrame extends javax.swing.JFrame {
      * Creates new form CharacterFrame
      */
     
-    static Users currentUser;
+    static Users curUser;
     
     public CharacterFrame(Users currentUser) {
         initComponents();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
-        currentUser = em.find(Users.class, currentUser.getUserName());
+        //currentUser = em.find(Users.class, currentUser.getUserName());
+        curUser = currentUser;
     }
 
     /**
@@ -124,7 +125,10 @@ public class CharacterFrame extends javax.swing.JFrame {
         character.setRace(cRace);
         
         Collection<Users> owner = new ArrayList<Users>();
-        owner.add(currentUser);
+        Collection<Characters> characters = new ArrayList<Characters>();
+        owner.add(curUser);
+        //characters.add(character);
+        //curUser.setCharactersCollection(characters);
         character.setUsersCollection(owner);
         
         try{

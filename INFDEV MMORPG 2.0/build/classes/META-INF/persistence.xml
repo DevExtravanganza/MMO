@@ -7,7 +7,7 @@
     <class>infdev.mmorpg.pkg2.pkg0.Users</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/mmorpg"/>
-      <property name="javax.persistence.jdbc.password" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="password"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
