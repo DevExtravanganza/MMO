@@ -12,6 +12,7 @@ import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -22,14 +23,10 @@ public class CharacterFrame extends javax.swing.JFrame {
     /**
      * Creates new form CharacterFrame
      */
-    
     static Users curUser;
-    
+
     public CharacterFrame(Users currentUser) {
         initComponents();
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
-        EntityManager em = emf.createEntityManager();
-        //currentUser = em.find(Users.class, currentUser.getUserName());
         curUser = currentUser;
     }
 
@@ -105,35 +102,50 @@ public class CharacterFrame extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
-        
+
         em.getTransaction().begin();
         String cName;
         String cClass;
         String cRace;
         int cLvl;
-        
+
         cName = jTextField1.getText();
         cRace = (String) jComboBox1.getSelectedItem();
         cClass = (String) jComboBox2.getSelectedItem();
-        cLvl = (int) Math.ceil(Math.random()*100);
-        
+        cLvl = (int) Math.ceil(Math.random() * 100);
+
         Characters character = new Characters();
-        
+
         character.setClass1(cClass);
         character.setLevel(cLvl);
         character.setName(cName);
         character.setRace(cRace);
-        
+
         Collection<Users> owner = new ArrayList<Users>();
         owner.add(curUser);
         character.setUsersCollection(owner);
         
-        try{
-            persist(character);
-            em.getTransaction().commit();
-        } catch(Exception e){
-            jLabel1.setText("This character name is already taken.");
-            e.printStackTrace();
+        Users curUserRefresh = em.find(Users.class, curUser.getUserName());
+        int curCharacterSlots = curUserRefresh.getCharacterSlots();
+        
+        if (curCharacterSlots > 0) {
+            try {
+
+                persist(character);
+  
+                Query q = em.createQuery("UPDATE Users SET characterSlots = " + (curCharacterSlots - 1) + " WHERE userName ='" + curUser.getUserName() + "'");
+                q.executeUpdate();
+
+                em.getTransaction().commit();
+
+                jLabel1.setText("Your character was succesfully created.");
+            } catch (Exception e) {
+                jLabel1.setText("This character name is already taken.");
+                e.printStackTrace();
+
+            }
+        } else {
+            jLabel1.setText("You don't have enough character slots.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
