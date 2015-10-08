@@ -71,7 +71,7 @@
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Orc&quot;, &quot;Human&quot;, &quot;Troll&quot;, &quot;Elf&quot;, &quot;Stone&quot; })" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Orc&quot;, &quot;Human&quot;, &quot;Troll&quot;, &quot;Elf&quot;, &quot;Stone&quot;, &quot;Fish person&quot; })" type="code"/>
         </Property>
       </Properties>
       <Events>
@@ -81,7 +81,7 @@
     <Component class="javax.swing.JComboBox" name="jComboBox2">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Slave&quot;, &quot;Warrior&quot;, &quot;Hunter&quot;, &quot;Sorcerer&quot; })" type="code"/>
+          <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;Slave&quot;, &quot;Warrior&quot;, &quot;Hunter&quot;, &quot;Sorcerer&quot;, &quot;Gunslinger&quot;, &quot;Ninja&quot;, &quot;Pirate&quot;, &quot;Police officer&quot;, &quot;Programmer&quot; })" type="code"/>
         </Property>
       </Properties>
     </Component>

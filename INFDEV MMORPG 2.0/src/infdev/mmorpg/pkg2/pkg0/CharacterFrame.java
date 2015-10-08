@@ -53,14 +53,14 @@ public class CharacterFrame extends javax.swing.JFrame {
 
         jTextField1.setText("Character name");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Orc", "Human", "Troll", "Elf", "Stone" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Orc", "Human", "Troll", "Elf", "Stone", "Fish person" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Slave", "Warrior", "Hunter", "Sorcerer" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Slave", "Warrior", "Hunter", "Sorcerer", "Gunslinger", "Ninja", "Pirate", "Police officer", "Programmer" }));
 
         jButton1.setText("Create character");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -125,10 +125,7 @@ public class CharacterFrame extends javax.swing.JFrame {
         character.setRace(cRace);
         
         Collection<Users> owner = new ArrayList<Users>();
-        Collection<Characters> characters = new ArrayList<Characters>();
         owner.add(curUser);
-        //characters.add(character);
-        //curUser.setCharactersCollection(characters);
         character.setUsersCollection(owner);
         
         try{
