@@ -22,15 +22,18 @@ public class GameFrame extends javax.swing.JFrame {
      * Creates new form GameFrame
      */
     static Users currentUser;
-    static String balanceString;
 
     public GameFrame(Users cUser) {
         initComponents();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
         currentUser = em.find(Users.class, cUser.getUserName());
-        balanceString = currentUser.getBalance().toString();
+        String balanceString = currentUser.getBalance().toString();
+        String slotsString = currentUser.getCharacterSlots().toString();
+        String subLeftString = currentUser.getMonthsPaid().toString();
         jLabel2.setText(balanceString);
+        jLabel14.setText(slotsString);
+        jLabel4.setText(subLeftString);
     }
 
     /**
@@ -70,6 +73,7 @@ public class GameFrame extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,7 +86,7 @@ public class GameFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Your balance: ");
 
-        jLabel2.setText(balanceString);
+        jLabel2.setText("");
 
         jButton2.setText("one month");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -212,6 +216,10 @@ public class GameFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton5)))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel16)
+                .addGap(345, 345, 345))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +261,9 @@ public class GameFrame extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addGap(45, 45, 45)
                 .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -270,7 +280,7 @@ public class GameFrame extends javax.swing.JFrame {
         int userBalance = currentUser.getBalance();
         int balance = userBalance + toAddCash;
         Integer iBalance = (Integer) balance;
-        balanceString = iBalance.toString();
+        String balanceString = iBalance.toString();
 
         em.getTransaction().begin();
         Query q = em.createQuery("UPDATE Users SET balance = " + balance + " WHERE userName ='" + currentUser.getUserName() + "'");
@@ -321,11 +331,15 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        if(currentUser.getMonthsPaid() > 0){
         CharacterFrame characterFrame = new CharacterFrame(currentUser);
         
         this.setVisible(false);
         characterFrame.pack();
         characterFrame.setVisible(true);
+        } else {
+            jLabel16.setText("You need to have an active subscription to manage your characters.");
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void subscriptionHandler(int subPeriod, int price) {
@@ -410,6 +424,7 @@ public class GameFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

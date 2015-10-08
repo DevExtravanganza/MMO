@@ -6,6 +6,14 @@
 package infdev.mmorpg.pkg2.pkg0;
 
 import static infdev.mmorpg.pkg2.pkg0.INFDEVMMORPG20.persist;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Vector;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -16,8 +24,11 @@ public class RegisterFrame extends javax.swing.JFrame {
     /**
      * Creates new form RegisterFrame
      */
+    static Servers selServer;
+
     public RegisterFrame() {
         initComponents();
+        fillServerComboBox();
     }
 
     /**
@@ -36,6 +47,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,6 +88,13 @@ public class RegisterFrame extends javax.swing.JFrame {
 
         jTextField5.setText("iban");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,6 +102,7 @@ public class RegisterFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(358, 358, 358)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -108,7 +128,9 @@ public class RegisterFrame extends javax.swing.JFrame {
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(97, 97, 97))
         );
@@ -117,21 +139,26 @@ public class RegisterFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        
         String username;
         String password;
         String iban;
         String fName;
         String lName;
-        
+
         lName = jTextField1.getText();
         fName = jTextField2.getText();
         username = jTextField3.getText();
         password = jTextField4.getText();
         iban = jTextField5.getText();
-        
+
         Users user = new Users();
         user.setCharacterSlots(5);
-        
+
         user.setBalance(0);
         user.setUserName(username);
         user.setFirstName(fName);
@@ -139,13 +166,22 @@ public class RegisterFrame extends javax.swing.JFrame {
         user.setIban(iban);
         user.setPassword(password);
         user.setMonthsPaid(0);
-        try{
+        user.setBanned(false);
+
+        Collection<Servers> serversCollection = new ArrayList<Servers>();
+        serversCollection.add(selServer);
+        user.setServersCollection(serversCollection);
+        
+        try {
             persist(user);
-        this.dispose();
-        } catch(Exception e){
+            em.getTransaction().commit();
+            this.dispose();
+            
+        } catch (Exception e) {
             jLabel1.setText("The username you are trying to use is already in use.");
         }
-        
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -163,6 +199,34 @@ public class RegisterFrame extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        int selectedIndex = jComboBox1.getSelectedIndex();
+        ArrayList<Servers> serverList = fillServerComboBox();
+        selServer = serverList.get(selectedIndex);
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private static ArrayList<Servers> fillServerComboBox() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
+        EntityManager em = emf.createEntityManager();
+
+        em.getTransaction().begin();
+        Query q = em.createQuery("SELECT s FROM Servers s");
+        Vector result = (Vector) q.getResultList();
+        em.getTransaction().commit();
+
+        ArrayList<String> serverNames = new ArrayList<String>();
+        ArrayList<Servers> serverList = new ArrayList<Servers>();
+
+        for (int i = 0; i < result.size(); i++) {
+            Servers server = (Servers) result.get(i);
+            serverList.add(server);
+            serverNames.add(server.getName());
+        }
+
+        jComboBox1.setModel(new DefaultComboBoxModel(serverNames.toArray()));
+        return serverList;
+    }
 
     /**
      * @param args the command line arguments
@@ -201,6 +265,7 @@ public class RegisterFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private static javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

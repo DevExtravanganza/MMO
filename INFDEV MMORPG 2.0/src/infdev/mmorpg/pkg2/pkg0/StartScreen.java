@@ -15,7 +15,6 @@ import javax.persistence.Persistence;
  */
 public class StartScreen extends javax.swing.JPanel {
 
-    
     /**
      * Creates new form StartScreen
      */
@@ -135,18 +134,21 @@ public class StartScreen extends javax.swing.JPanel {
         
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
-        try{
-            Users result = (Users) em.createQuery("SELECT u FROM Users u WHERE u.userName ='"+toCheckUsername+"' AND u.password ='"+toCheckPassword+"'").getSingleResult();
-            
-            GameFrame gameFrame = new GameFrame(result);
-            
-            this.setVisible(false);
-            gameFrame.pack();
-            gameFrame.setVisible(true);
-        } catch(Exception e){
+        try {
+            Users result = (Users) em.createQuery("SELECT u FROM Users u WHERE u.userName ='" + toCheckUsername + "' AND u.password ='" + toCheckPassword + "'").getSingleResult();
+            if (result.getBanned() == false) {
+                GameFrame gameFrame = new GameFrame(result);
+                
+                this.setVisible(false);
+                gameFrame.pack();
+                gameFrame.setVisible(true);
+            } else {
+                jLabel4.setText("You have been banned.");
+            }
+        } catch (Exception e) {
             jLabel4.setText("Your username and/or password is incorrect.");
             e.printStackTrace();
-        } 
+        }        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

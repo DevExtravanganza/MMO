@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -29,6 +30,7 @@ public class CharacterFrame extends javax.swing.JFrame {
     public CharacterFrame(Users currentUser) {
         initComponents();
         curUser = currentUser;
+        fillComboBox();
     }
 
     /**
@@ -41,6 +43,7 @@ public class CharacterFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox();
         jComboBox2 = new javax.swing.JComboBox();
@@ -51,7 +54,10 @@ public class CharacterFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,13 +98,6 @@ public class CharacterFrame extends javax.swing.JFrame {
 
         jLabel5.setText("Class:");
 
-        jButton2.setText("Test");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,28 +107,35 @@ public class CharacterFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, 0, 155, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(jButton1))
-                            .addComponent(jLabel5))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, 0, 155, Short.MAX_VALUE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(281, 281, 281)
+                                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(50, 50, 50))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                                        .addGap(62, 62, 62)))
+                                .addComponent(jButton1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
                 .addContainerGap(181, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(331, 331, 331))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,9 +155,15 @@ public class CharacterFrame extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(jButton2)
-                .addContainerGap(413, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addContainerGap(444, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,6 +194,7 @@ public class CharacterFrame extends javax.swing.JFrame {
         Collection<Users> owner = new ArrayList<Users>();
         owner.add(curUser);
         character.setUsersCollection(owner);
+        System.out.println(character.getUsersCollection());
         
         Users curUserRefresh = em.find(Users.class, curUser.getUserName());
         int curCharacterSlots = curUserRefresh.getCharacterSlots();
@@ -197,6 +210,7 @@ public class CharacterFrame extends javax.swing.JFrame {
                 em.getTransaction().commit();
 
                 jLabel1.setText("Your character was succesfully created.");
+                fillComboBox();
             } catch (Exception e) {
                 jLabel1.setText("This character name is already taken.");
                 e.printStackTrace();
@@ -217,18 +231,26 @@ public class CharacterFrame extends javax.swing.JFrame {
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         //character selection code
+       int selectedIndex = jComboBox3.getSelectedIndex();
+       ArrayList<Characters> charactersList = fillComboBox();
+       Characters selectedChar = charactersList.get(selectedIndex);
        
+       jLabel6.setText("Name: "+selectedChar.getName());
+       jLabel7.setText("Race: "+selectedChar.getRace());
+       jLabel8.setText("Class: "+selectedChar.getClass1());
+       jLabel9.setText("Level: "+selectedChar.getLevel().toString());
     }//GEN-LAST:event_jComboBox3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private static ArrayList<Characters> fillComboBox(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        Query q = em.createQuery("SELECT c FROM Characters c ORDER BY c.level");
+        Query q = em.createQuery("SELECT c FROM Characters c ORDER BY c.level DESC");
         Vector result = (Vector) q.getResultList();
         em.getTransaction().commit();
         ArrayList<Characters> filteredResult = new ArrayList<Characters>();
+        ArrayList<String> charNames = new ArrayList<String>();
         
         for(int i = 0; i < result.size(); i++){
             Characters character = (Characters) result.get(i);
@@ -236,12 +258,16 @@ public class CharacterFrame extends javax.swing.JFrame {
             Users owner = (Users) ownerArray.get(0);
             if(owner.getUserName().equals(curUser.getUserName())){
                 filteredResult.add(character);
-                System.out.println(character.getName());
+                charNames.add(character.getName());
+                
             }
         }
         
-    }//GEN-LAST:event_jButton2ActionPerformed
-
+        jComboBox3.setModel(new DefaultComboBoxModel(charNames.toArray()));
+        return filteredResult;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -269,9 +295,11 @@ public class CharacterFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 new CharacterFrame(currentUser).setVisible(true);
             }
         });
@@ -279,16 +307,20 @@ public class CharacterFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
+    private static javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
