@@ -143,7 +143,7 @@ public class RegisterFrame extends javax.swing.JFrame {
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
-        
+
         String username;
         String password;
         String iban;
@@ -167,16 +167,20 @@ public class RegisterFrame extends javax.swing.JFrame {
         user.setPassword(password);
         user.setMonthsPaid(0);
         user.setBanned(false);
+        /*
+         Collection<Servers> serversCollection = new ArrayList<Servers>();
+         serversCollection.add(selServer);
+         user.setServersCollection(serversCollection);
+         */
 
-        Collection<Servers> serversCollection = new ArrayList<Servers>();
-        serversCollection.add(selServer);
-        user.setServersCollection(serversCollection);
-        
         try {
             persist(user);
             em.getTransaction().commit();
+            Collection<Servers> serversCollection = new ArrayList<Servers>();
+            serversCollection.add(selServer);
+            user.setServersCollection(serversCollection);
             this.dispose();
-            
+
         } catch (Exception e) {
             jLabel1.setText("The username you are trying to use is already in use.");
         }
