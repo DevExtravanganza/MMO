@@ -23,7 +23,7 @@ public class INFDEVMMORPG20 {
      */
     public static void main(String[] args) {
         
-        //generateJunk();
+        generateJunk();
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -38,7 +38,7 @@ public class INFDEVMMORPG20 {
     
     public static void generateJunk(){
         long startTime = System.currentTimeMillis();
-        for(int i = 0; i < 1000; i++){
+        for(int i = 0; i < 5000; i++){
             Users filler = new Users();
             filler.setBalance(0);
             filler.setBanned(false);
@@ -55,12 +55,26 @@ public class INFDEVMMORPG20 {
             fillerChar.setLevel((int) Math.ceil(Math.random() * 100));
             fillerChar.setName("Charname"+i);
             fillerChar.setRace("Orc");
+            
+            Characters fillerChar2 = new Characters();
+            fillerChar2.setClass1("Warrior");
+            fillerChar2.setLevel((int) Math.ceil(Math.random() * 100));
+            fillerChar2.setName("Charname"+i+".2");
+            fillerChar2.setRace("Orc");
+            
             Collection<Users> ownerFiller = new ArrayList<Users>();
             ownerFiller.add(filler);
             fillerChar.setUsersCollection(ownerFiller);
             
+            Collection<Users> ownerFiller2 = new ArrayList<Users>();
+            ownerFiller2.add(filler);
+            fillerChar2.setUsersCollection(ownerFiller2);
+            
+            
+            
             persist(filler);
             persist(fillerChar);
+            persist(fillerChar2);
         }
         long endTime = System.currentTimeMillis();
         System.out.println("Adding all the objects took " + (endTime - startTime) + " milliseconds.");
