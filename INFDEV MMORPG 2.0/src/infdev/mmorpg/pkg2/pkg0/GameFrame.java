@@ -28,10 +28,10 @@ public class GameFrame extends javax.swing.JFrame {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("INFDEV_MMORPG_2.0PU");
         EntityManager em = emf.createEntityManager();
         currentUser = em.find(Users.class, cUser.getUserName());
-        String balanceString = currentUser.getBalance().toString();
+        //String balanceString = currentUser.getBalance().toString();
         String slotsString = currentUser.getCharacterSlots().toString();
-        String subLeftString = currentUser.getMonthsPaid().toString();
-        jLabel2.setText(balanceString);
+        String subLeftString = currentUser.getMonthsPaid() + "";
+        jLabel2.setText(new Integer(currentUser.getBalance()).toString());
         jLabel14.setText(slotsString);
         jLabel4.setText(subLeftString);
     }

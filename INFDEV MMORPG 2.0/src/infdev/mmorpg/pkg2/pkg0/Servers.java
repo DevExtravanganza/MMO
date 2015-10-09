@@ -8,14 +8,13 @@ package infdev.mmorpg.pkg2.pkg0;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -48,11 +47,8 @@ public class Servers implements Serializable {
     private Integer maxUsers;
     @Column(name = "connected_users")
     private Integer connectedUsers;
-    @JoinTable(name = "stores", joinColumns = {
-        @JoinColumn(name = "server_address", referencedColumnName = "address")}, inverseJoinColumns = {
-        @JoinColumn(name = "user_name", referencedColumnName = "user_name")})
-    @ManyToMany
-    private Collection<Users> usersCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "servers")
+    private Collection<Stores> storesCollection;
 
     public Servers() {
     }
@@ -102,12 +98,12 @@ public class Servers implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public Collection<Stores> getStoresCollection() {
+        return storesCollection;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
+    public void setStoresCollection(Collection<Stores> storesCollection) {
+        this.storesCollection = storesCollection;
     }
 
     @Override

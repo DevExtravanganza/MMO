@@ -9,12 +9,14 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,8 +48,9 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "user_name")
     private String userName;
+    @Basic(optional = false)
     @Column(name = "balance")
-    private Integer balance;
+    private int balance;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
@@ -59,22 +62,29 @@ public class Users implements Serializable {
     @Column(name = "last_payment")
     @Temporal(TemporalType.DATE)
     private Date lastPayment;
+    @Basic(optional = false)
     @Column(name = "months_paid")
-    private Integer monthsPaid;
+    private int monthsPaid;
     @Column(name = "password")
     private String password;
     @Column(name = "banned")
     private Boolean banned;
     @ManyToMany(mappedBy = "usersCollection")
     private Collection<Characters> charactersCollection;
-    @ManyToMany(mappedBy = "usersCollection")
-    private Collection<Servers> serversCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
+    private Collection<Stores> storesCollection;
 
     public Users() {
     }
 
     public Users(String userName) {
         this.userName = userName;
+    }
+
+    public Users(String userName, int balance, int monthsPaid) {
+        this.userName = userName;
+        this.balance = balance;
+        this.monthsPaid = monthsPaid;
     }
 
     public String getUserName() {
@@ -85,11 +95,11 @@ public class Users implements Serializable {
         this.userName = userName;
     }
 
-    public Integer getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
@@ -133,11 +143,11 @@ public class Users implements Serializable {
         this.lastPayment = lastPayment;
     }
 
-    public Integer getMonthsPaid() {
+    public int getMonthsPaid() {
         return monthsPaid;
     }
 
-    public void setMonthsPaid(Integer monthsPaid) {
+    public void setMonthsPaid(int monthsPaid) {
         this.monthsPaid = monthsPaid;
     }
 
@@ -167,12 +177,12 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Servers> getServersCollection() {
-        return serversCollection;
+    public Collection<Stores> getStoresCollection() {
+        return storesCollection;
     }
 
-    public void setServersCollection(Collection<Servers> serversCollection) {
-        this.serversCollection = serversCollection;
+    public void setStoresCollection(Collection<Stores> storesCollection) {
+        this.storesCollection = storesCollection;
     }
 
     @Override

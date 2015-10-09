@@ -136,8 +136,7 @@ public class StartScreen extends javax.swing.JPanel {
         EntityManager em = emf.createEntityManager();
         try {
             Users result = (Users) em.createQuery("SELECT u FROM Users u WHERE u.userName ='" + toCheckUsername + "' AND u.password ='" + toCheckPassword + "'").getSingleResult();
-            
-            if (!result.getBanned() == true) {
+            if (result != null && !result.getBanned()) {
                 GameFrame gameFrame = new GameFrame(result);
 
                 this.setVisible(false);

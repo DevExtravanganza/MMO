@@ -7,7 +7,6 @@ package infdev.mmorpg.pkg2.pkg0;
 
 import static infdev.mmorpg.pkg2.pkg0.INFDEVMMORPG20.persist;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Vector;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -167,18 +166,20 @@ public class RegisterFrame extends javax.swing.JFrame {
         user.setPassword(password);
         user.setMonthsPaid(0);
         user.setBanned(false);
-        /*
-         Collection<Servers> serversCollection = new ArrayList<Servers>();
-         serversCollection.add(selServer);
-         user.setServersCollection(serversCollection);
-         */
+        
+        Stores store = new Stores();
+        store.setServers(selServer);
+        store.setUsers(user);
+        StoresPK storePriKey = new StoresPK();
+        storePriKey.setServerAddress(selServer.getAddress());
+        storePriKey.setUserName(user.getUserName());
+        store.setStoresPK(storePriKey);
+        
 
-        try {
+        try {        
             persist(user);
+            persist(store);
             em.getTransaction().commit();
-            Collection<Servers> serversCollection = new ArrayList<Servers>();
-            serversCollection.add(selServer);
-            user.setServersCollection(serversCollection);
             this.dispose();
 
         } catch (Exception e) {

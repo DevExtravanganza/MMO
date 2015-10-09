@@ -5,6 +5,7 @@
     <class>infdev.mmorpg.pkg2.pkg0.Servers</class>
     <class>infdev.mmorpg.pkg2.pkg0.Characters</class>
     <class>infdev.mmorpg.pkg2.pkg0.Users</class>
+    <class>infdev.mmorpg.pkg2.pkg0.Stores</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/mmorpg"/>
       <property name="javax.persistence.jdbc.password" value="password"/>

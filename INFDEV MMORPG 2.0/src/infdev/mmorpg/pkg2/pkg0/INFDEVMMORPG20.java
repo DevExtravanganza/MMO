@@ -70,11 +70,26 @@ public class INFDEVMMORPG20 {
             ownerFiller2.add(filler);
             fillerChar2.setUsersCollection(ownerFiller2);
             
+            Servers serverFiller = new Servers();
+            serverFiller.setAddress("127.0.0."+i);
+            serverFiller.setConnectedUsers(0);
+            serverFiller.setMaxUsers((int) Math.ceil(Math.random() * 100));
+            serverFiller.setName("Server "+i);
             
             
+            Stores store = new Stores();
+            store.setServers(serverFiller);
+            store.setUsers(filler);
+            StoresPK storePriKey = new StoresPK();
+            storePriKey.setServerAddress(serverFiller.getAddress());
+            storePriKey.setUserName(filler.getUserName());
+            store.setStoresPK(storePriKey);
+            
+            persist(serverFiller);
             persist(filler);
             persist(fillerChar);
             persist(fillerChar2);
+            persist(store);
         }
         long endTime = System.currentTimeMillis();
         System.out.println("Adding all the objects took " + (endTime - startTime) + " milliseconds.");
